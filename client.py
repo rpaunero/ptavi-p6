@@ -50,7 +50,7 @@ if METHOD == 'INVITE':
     if instruccion1 == '100' and instruccion2 == '180' and instruccion3 == '200':
         LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' '+ 'SIP/2.0'
         print("Enviando: " + LINE)
-        my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
+        my_socket.send(bytes(LINE, 'utf-8') + b'\r\n\r\n')
         data = my_socket.recv(1024)
 
 print("Terminando socket...")
