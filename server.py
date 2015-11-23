@@ -31,20 +31,23 @@ class EchoHandler(socketserver.DatagramRequestHandler):
 
     def handle(self):
         # Escribe dirección y puerto del cliente (de tupla client_address)
-        self.wfile.write(b"Hemos recibido tu peticion")
         while 1:
             # Leyendo línea a línea lo que nos envía el cliente
             line = self.rfile.read()
-            print("El cliente nos manda " + line.decode('utf-8'))
-            elemento = line.split(' ')
-            METHOD = elemento[0]
-            if METHOD == 'INVITE':
-                self.wfile.write(b"SIP/2.0 100 Trying,SIP/2.0 180 Ring y SIP/2.0 200 OK\r\n\r\n")
-            if METHOD not in ['INVITE', 'ACK', 'BYE']:
-                self.wfile.write(b"SIP/2.0 405 Method Not Allowed\r\n\r\n")
-            # Si no hay más líneas salimos del bucle infinito
             if not line:
-                break
+                    break
+            elemento = line.decode('utf-8')
+            print("El cliente nos manda " + elemento)
+            METHOD =  elemento.split(' ')[0]  
+            if METHOD == 'INVITE':
+                self.wfile.write(b"SIP/2.0 100 Trying" + b"\r\n\r\n")
+                self.wfile.write(b"SIP/2.0 180 Ring" + b"\r\n\r\n")
+                self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n\r\n")
+            elif METHOD == 'BYE':
+                self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n\r\n")
+            if METHOD not in ['INVITE', 'ACK', 'BYE']:
+                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" + b"\r\n\r\n")
+                
 
 if __name__ == "__main__":
     # Creamos servidor de eco y escuchamos
