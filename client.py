@@ -40,18 +40,18 @@ instruccion = data.decode('utf-8')
 print('Recibido -- ', instruccion)
 print (instruccion.split())
 
-instruccion1 = instruccion.split()[1]
-print(instruccion1)
-instruccion2 = instruccion.split()[4]
-print(instruccion2)
-instruccion3 = instruccion.split()[7]
-print(instruccion3)
-if instruccion1 == '100' and instruccion2 == '180' and instruccion3 == '200':
-    print("INSTRUCCIONES CORRECTAS")
-    LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' '+ 'SIP/2.0'
-    print("Enviando: " + LINE)
-    my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
-    data = my_socket.recv(1024)
+if METHOD == 'INVITE':
+    instruccion1 = instruccion.split()[1]
+    print(instruccion1)
+    instruccion2 = instruccion.split()[4]
+    print(instruccion2)
+    instruccion3 = instruccion.split()[7]
+    print(instruccion3)
+    if instruccion1 == '100' and instruccion2 == '180' and instruccion3 == '200':
+        LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' '+ 'SIP/2.0'
+        print("Enviando: " + LINE)
+        my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
+        data = my_socket.recv(1024)
 
 print("Terminando socket...")
 
