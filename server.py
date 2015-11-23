@@ -23,7 +23,7 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                     break
             elemento = line.decode('utf-8')
             print("El cliente nos manda " + elemento)
-            METHOD =  elemento.split(' ')[0]  
+            METHOD = elemento.split(' ')[0]
             if METHOD == 'INVITE':
                 self.wfile.write(b"SIP/2.0 100 Trying" + b"\r\n\r\n")
                 self.wfile.write(b"SIP/2.0 180 Ring" + b"\r\n\r\n")
@@ -31,13 +31,13 @@ class EchoHandler(socketserver.DatagramRequestHandler):
             elif METHOD == 'BYE':
                 self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n\r\n")
             elif METHOD == 'ACK':
-                # aEjecutar es un string con lo que se ha de ejecutar en la shell
+       # aEjecutar es un string con lo que se ha de ejecutar en la shell
                 aEjecutar = ('./mp32rtp -i ' + IP + ' -p 23032 < ' + ARCHIVO)
                 print("Vamos a ejecutar", aEjecutar)
                 os.system(aEjecutar)
             if METHOD not in ['INVITE', 'ACK', 'BYE']:
-                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" + b"\r\n\r\n")
-                
+                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" +
+                                 b"\r\n\r\n")
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         sys.exit('El fichero no existe')
 
     print('Listening...')
-    
+
     serv = socketserver.UDPServer(('', int(PORT)), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     serv.serve_forever()
