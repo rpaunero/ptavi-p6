@@ -7,28 +7,13 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 import socketserver
 import sys
 import os.path
+import os
 
 
 class EchoHandler(socketserver.DatagramRequestHandler):
     """
     Echo server class
     """
-
-
-    if len(sys.argv) != 4:
-        sys.exit('Usage: python3 server.py IP port audio_file')
-
-    IP = sys.argv[1]
-    print('IP' + ':' + IP)
-    PORT = sys.argv[2]
-    print('PORT' + ':' + str(PORT))
-    ARCHIVO = sys.argv[3]
-
-    if not os.path.exists(ARCHIVO):
-        sys.exit('El fichero no existe')
-
-    print('Listening...')
-
     def handle(self):
         # Escribe dirección y puerto del cliente (de tupla client_address)
         while 1:
@@ -45,12 +30,30 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                 self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n\r\n")
             elif METHOD == 'BYE':
                 self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n\r\n")
+            elif METHOD == 'ACK':
+                # aEjecutar es un string con lo que se ha de ejecutar en la shell
+                aEjecutar = ('./mp32rtp -i ' + IP + ' -p 23032 < ' + ARCHIVO)
+                print("Vamos a ejecutar", aEjecutar)
+                os.system(aEjecutar)
             if METHOD not in ['INVITE', 'ACK', 'BYE']:
                 self.wfile.write(b"SIP/2.0 405 Method Not Allowed" + b"\r\n\r\n")
                 
 
 if __name__ == "__main__":
-    # Creamos servidor de eco y escuchamos
-    serv = socketserver.UDPServer(('', int(sys.argv[2])), EchoHandler)
+    if len(sys.argv) != 4:
+        sys.exit('Usage: python3 server.py IP port audio_file')
+
+    IP = sys.argv[1]
+    print('IP' + ':' + IP)
+    PORT = sys.argv[2]
+    print('PORT' + ':' + str(PORT))
+    ARCHIVO = sys.argv[3]
+
+    if not os.path.exists(ARCHIVO):
+        sys.exit('El fichero no existe')
+
+    print('Listening...')
+    
+    serv = socketserver.UDPServer(('', int(PORT)), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     serv.serve_forever()
