@@ -41,14 +41,13 @@ print('Recibido -- ', instruccion)
 print (instruccion.split())
 
 if METHOD == 'INVITE':
-    instruccion1 = instruccion.split()[1]
-    print(instruccion1)
-    instruccion2 = instruccion.split()[4]
-    print(instruccion2)
-    instruccion3 = instruccion.split()[7]
-    print(instruccion3)
-    if instruccion1 == '100' and instruccion2 == '180'
-    and instruccion3 == '200':
+    n1 = instruccion.split()[1]
+    print(n1)
+    n2 = instruccion.split()[4]
+    print(n2)
+    n3 = instruccion.split()[7]
+    print(n3)
+    if n1 == '100' and n2 == '180' and n3 == '200':
         LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' ' + 'SIP/2.0'
         print("Enviando: " + LINE)
         my_socket.send(bytes(LINE, 'utf-8') + b'\r\n\r\n')
