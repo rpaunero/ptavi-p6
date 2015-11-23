@@ -22,7 +22,7 @@ PORT = int(sys.argv[2].split(':')[1])
 if not '@' or ':' in LOGIN:
     sys.exit('Usage: python client.py method receiver@IP:SIPport')
 
-if METHOD in ['INVITE', 'ACK', 'BYE']:
+if METHOD in ['INVITE', 'BYE']:
     LINE = METHOD
 LINE = LINE + ' ' + 'sip:' + LOGIN + ' '+ 'SIP/2.0'
 
@@ -36,7 +36,23 @@ print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 data = my_socket.recv(1024)
 
-print('Recibido -- ', data.decode('utf-8'))
+instruccion = data.decode('utf-8')
+print('Recibido -- ', instruccion)
+print (instruccion.split())
+
+instruccion1 = instruccion.split()[1]
+print(instruccion1)
+instruccion2 = instruccion.split()[4]
+print(instruccion2)
+instruccion3 = instruccion.split()[7]
+print(instruccion3)
+if instruccion1 == '100' and instruccion2 == '180' and instruccion3 == '200':
+    print("INSTRUCCIONES CORRECTAS")
+    LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' '+ 'SIP/2.0'
+    print("Enviando: " + LINE)
+    my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
+    data = my_socket.recv(1024)
+
 print("Terminando socket...")
 
 # Cerramos todo
