@@ -22,7 +22,7 @@ PORT = int(sys.argv[2].split(':')[1])
 if not '@' or ':' in LOGIN:
     sys.exit('Usage: python client.py method receiver@IP:SIPport')
 
-if METHOD not in ['INVITE', 'BYE']:
+if METHOD not in ['INVITE', 'BYE', 'METHOD']:
     sys.exit('Usage: Invalid method')
 else:
     LINE = METHOD
@@ -40,15 +40,12 @@ data = my_socket.recv(1024)
 
 instruccion = data.decode('utf-8')
 print('Recibido -- ', instruccion)
-print (instruccion.split())
+#print (instruccion.split())
 
 if METHOD == 'INVITE':
     n1 = instruccion.split()[1]
-    print(n1)
     n2 = instruccion.split()[4]
-    print(n2)
     n3 = instruccion.split()[7]
-    print(n3)
     if n1 == '100' and n2 == '180' and n3 == '200':
         LINE = 'ACK' + ' ' + 'sip:' + LOGIN + ' ' + 'SIP/2.0'
         print("Enviando: " + LINE)
