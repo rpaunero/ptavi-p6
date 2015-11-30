@@ -23,7 +23,7 @@ if not '@' or ':' in LOGIN:
     sys.exit('Usage: python client.py method receiver@IP:SIPport')
 
 if METHOD not in ['INVITE', 'BYE']:
-    sys.exit('Usage: Invalid method')
+    sys.exit('SIP/2.0 405 Method Not Allowed')
 else:
     LINE = METHOD
 LINE = LINE + ' ' + 'sip:' + LOGIN + ' ' + 'SIP/2.0'
