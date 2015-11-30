@@ -50,7 +50,7 @@ if __name__ == "__main__":
     ARCHIVO = sys.argv[3]
 
     if not os.path.exists(ARCHIVO):
-        sys.exit('Usage: python3 server.py IP port audio_file')
+        sys.exit('Usage: audio file does not exists')
 
     print('Listening...')
 
