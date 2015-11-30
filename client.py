@@ -22,7 +22,9 @@ PORT = int(sys.argv[2].split(':')[1])
 if not '@' or ':' in LOGIN:
     sys.exit('Usage: python client.py method receiver@IP:SIPport')
 
-if METHOD in ['INVITE', 'BYE']:
+if METHOD not in ['INVITE', 'BYE']:
+    sys.exit('Usage: Invalid method')
+else:
     LINE = METHOD
 LINE = LINE + ' ' + 'sip:' + LOGIN + ' ' + 'SIP/2.0'
 
