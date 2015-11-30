@@ -35,9 +35,11 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                 aEjecutar = ('./mp32rtp -i ' + IP + ' -p 23032 < ' + ARCHIVO)
                 print("Vamos a ejecutar", aEjecutar)
                 os.system(aEjecutar)
-            if METHOD not in ['INVITE', 'ACK', 'BYE']:
+            elif METHOD not in ['INVITE', 'ACK', 'BYE']:
                 self.wfile.write(b"SIP/2.0 405 Method Not Allowed" +
                                  b"\r\n\r\n")
+            else:
+                self.wfile.write(b"SIP/2.0 400 Bad Request" + b"\r\n\r\n")
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
