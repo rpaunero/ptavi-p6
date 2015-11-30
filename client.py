@@ -23,7 +23,7 @@ if not '@' or ':' in LOGIN:
     sys.exit('Usage: python client.py method receiver@IP:SIPport')
 
 if METHOD not in ['INVITE', 'BYE']:
-    sys.exit('SIP/2.0 405 Method Not Allowed')
+    sys.exit('Usage: python client.py method(INVITE/BYE) receiver@IP:SIPport')
 else:
     LINE = METHOD
 LINE = LINE + ' ' + 'sip:' + LOGIN + ' ' + 'SIP/2.0'
@@ -40,7 +40,6 @@ data = my_socket.recv(1024)
 
 instruccion = data.decode('utf-8')
 print('Recibido -- ', instruccion)
-#print (instruccion.split())
 
 if METHOD == 'INVITE':
     n1 = instruccion.split()[1]
