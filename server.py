@@ -46,9 +46,7 @@ if __name__ == "__main__":
         sys.exit('Usage: python3 server.py IP port audio_file')
 
     IP = sys.argv[1]
-    print('IP' + ':' + IP)
     PORT = sys.argv[2]
-    print('PORT' + ':' + str(PORT))
     ARCHIVO = sys.argv[3]
 
     if not os.path.exists(ARCHIVO):
